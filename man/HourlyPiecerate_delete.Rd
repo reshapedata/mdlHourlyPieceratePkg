@@ -4,10 +4,10 @@
 \alias{HourlyPiecerate_delete}
 \title{计时计件工资表删除}
 \usage{
-HourlyPiecerate_delete(token, a.FProductionNumber, Fseq)
+HourlyPiecerate_delete(token, FProductionNumber, Fseq)
 }
 \arguments{
-\item{Fseq}{}
+\item{a.FProductionNumber}{}
 }
 \value{
 
