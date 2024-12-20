@@ -4,10 +4,7 @@
 \alias{HourlyPiecerate_view}
 \title{计时计件工资表查询}
 \usage{
-HourlyPiecerate_view(token, FProductionNumber)
-}
-\arguments{
-\item{FProductionNumber}{}
+HourlyPiecerate_view(dms_token, FYEAR, FMONTH)
 }
 \value{
 
