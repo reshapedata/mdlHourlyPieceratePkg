@@ -49,7 +49,7 @@ from rds_t_HourlyWages
 #' @examples
 #' HourlyWages_delete()
 HourlyWages_delete <- function(token,FOPERATIONNAMEFSEQ) {
-  sql=paste0(" delete  from rds_t_HourlyWages  where FOPERATIONNAMEFSEQ='",FOPERATIONNAMEFSEQ,"'
+  sql=paste0(" delete  from rds_t_HourlyWages  where FSEQ='",FOPERATIONNAMEFSEQ,"'
              ")
   res=tsda::sql_delete2(token = token,sql_str = sql)
   return(res)
