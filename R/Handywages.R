@@ -31,10 +31,9 @@ END AS FDAYS,
 FNAME,FBaseWages,FattendanceDays,FleaveDays ,
 CASE
 WHEN FattendanceDays>=28  OR FleaveDays=0  THEN 0
-WHEN FleaveDays=0   THEN 0
-WHEN FMONTH=2 and (FattendanceDays>=26 or   FleaveDays=0 )then 0
+WHEN FMONTH=2 and FattendanceDays>=26 then 0
 when FMONTH in(1,3,5,7,8,10,12) and FattendanceDays < 28 and FleaveDays > 0 then  (FBaseWages/29)*FleaveDays
-when FMONTH in(2,4,6,9,11) and FattendanceDays < 28 and FleaveDays > 0 then  (FBaseWages/28)*FleaveDays
+when FMONTH in(4,6,9,11) and FattendanceDays < 28 and FleaveDays > 0 then  (FBaseWages/28)*FleaveDays
 when day(cast(CAST(FYEAR as varchar(4))+'-'+CAST(FMONTH+1 as varchar(2))+'-01' as datetime)-1) =28
 and FattendanceDays < 26 and FleaveDays > 0  then  (FBaseWages/26)*FleaveDays
 when day(cast(CAST(FYEAR as varchar(4))+'-'+CAST(FMONTH+1 as varchar(2))+'-01' as datetime)-1) =29
@@ -42,10 +41,9 @@ and FattendanceDays < 26 and FleaveDays > 0  then (FBaseWages/27)*FleaveDays
 END as FDeductionwages,
 FBaseWages-(CASE
 WHEN FattendanceDays>=28  OR FleaveDays=0  THEN 0
-WHEN FleaveDays=0   THEN 0
-WHEN FMONTH=2 and (FattendanceDays>=26 or   FleaveDays=0 )then 0
+WHEN FMONTH=2 and FattendanceDays>=26 then 0
 when FMONTH in(1,3,5,7,8,10,12) and FattendanceDays < 28 and FleaveDays > 0 then  (FBaseWages/29)*FleaveDays
-when FMONTH in(2,4,6,9,11) and FattendanceDays < 28 and FleaveDays > 0 then  (FBaseWages/28)*FleaveDays
+when FMONTH in(4,6,9,11) and FattendanceDays < 28 and FleaveDays > 0 then  (FBaseWages/28)*FleaveDays
 when day(cast(CAST(FYEAR as varchar(4))+'-'+CAST(FMONTH+1 as varchar(2))+'-01' as datetime)-1) =28
 and FattendanceDays < 26 and FleaveDays > 0  then  (FBaseWages/26)*FleaveDays
 when day(cast(CAST(FYEAR as varchar(4))+'-'+CAST(FMONTH+1 as varchar(2))+'-01' as datetime)-1) =29
