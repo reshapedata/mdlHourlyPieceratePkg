@@ -69,7 +69,7 @@ select * from rds_erp_src_t_productdaily_input
 #' @examples
 #' productdaily_get()
 productdaily_get <- function(dms_token) {
-
+#除0
 
   sql=paste0("   select a.FSRCSPLITBILLNO as 生产订单号,a.FmaterialNumber as 物料编码,a.FSPECIFICATION  as 规格型号,a.FProductLots as 流水号,
 c.[FProcessName] as 工序,a.FFINISHQTY as 汇报选单数量,b.FBoxQuantity as 每箱数量
