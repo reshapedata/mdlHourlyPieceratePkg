@@ -81,8 +81,9 @@ isnull(a.FFINISHQTY%nullif(b.FBoxQuantity,0),0) as 零头数
 from rds_erp_src_t_productdaily a
 left join rds_t_productRouting b  on a.FmaterialNumber=b.FMaterialNumber
 left join [rds_t_Routing] c on b.FRoutingNumber=c.FRoutingNumber
+left join  rds_t_productdaily d on a.FProductLots=d.FProductLots and c.FProcessName =d.FProcessName
 where  a.FProductLots not in (select FProductLots from [rds_t_productdaily_FProductLots_black])
-and a.FProductLots not in(select FProductLots from [rds_t_productdaily])
+and d.FProductLots is  null and d.FProcessName is   null
 
 
              ")
@@ -193,10 +194,17 @@ productdaily_upload <- function(dms_token,file_name) {
   data = tsdo::na_standard(data)
   #上传服务器----------------
   tsda::db_writeTable2(token = dms_token,table_name = 'rds_t_productdaily_input',r_object = data,append = TRUE)
-  sql_delete =paste0("delete a from rds_t_productdaily_input a
-where a.FProductLots in(select distinct FProductLots from rds_t_productdaily)")
+  sql_delete =paste0("delete a from  rds_t_productdaily a
+inner join rds_t_productdaily_input b
+on a.FProductLots=b.FProductLots and a.FProcessName=b.FProcessName")
 
   tsda::sql_delete2(token = dms_token,sql_str = sql_delete)
+
+  sql_delete2 =paste0("delete a from rds_t_productdaily_input a
+where   FOperator='' or FOperator =0")
+
+  tsda::sql_delete2(token = dms_token,sql_str = sql_delete2)
+
 
   sql_insert =paste0("insert into  rds_t_productdaily select * from rds_t_productdaily_input")
   tsda::sql_insert2(token = dms_token,sql_str = sql_insert)

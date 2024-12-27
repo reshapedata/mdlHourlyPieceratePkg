@@ -11,7 +11,7 @@
 HourlyPiecerate_detail_view <- function(dms_token,FYEAR,FMONTH) {
 
   sql=paste0("
-  SELECT
+ SELECT
 d.	FSRCSPLITBILLNO	as	生产订单	,
 d.	FmaterialNumber	as	物料编码	,
 d.	FSPECIFICATION	as	产品图号	,
@@ -46,7 +46,7 @@ where a.FManualtime>0
 WHERE Rowindex=1
 union all
 --人工补时
-SELECT a.FSRCSPLITBILLNO,a.FmaterialNumber,a.FSPECIFICATION,a.FProductLots,a.FProcessName,a.FFINISHQTY,a.FBoxQuantity,
+SELECT a.FSRCSPLITBILLNO,a.FmaterialNumber,a.FSPECIFICATION,a.FProductLots,a.FProcessName,a.FRealqty,a.FBoxQuantity,
 a.FBoxQty,a.FBoxFractionQty,a.FScrappedQty,a.FManualtime,a.FManualstoppage,a.FOperator,a.FProDate,a.FInputDate ,
 (isnull(a.FHourlywages,0)+isnull(a.FRealqty,0)*isnull(a.Fprice,0)) as FHourlywages from
 (
