@@ -201,7 +201,7 @@ on a.FProductLots=b.FProductLots and a.FProcessName=b.FProcessName")
   tsda::sql_delete2(token = dms_token,sql_str = sql_delete)
 
   sql_delete2 =paste0("delete a from rds_t_productdaily_input a
-where   FOperator='' or FOperator =0")
+where   FOperator='' or FOperator ='0'")
 
   tsda::sql_delete2(token = dms_token,sql_str = sql_delete2)
 
