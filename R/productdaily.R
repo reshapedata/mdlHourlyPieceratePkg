@@ -71,19 +71,21 @@ select * from rds_erp_src_t_productdaily_input
 productdaily_get <- function(dms_token) {
 #除0
 
-  sql=paste0("   select a.FSRCSPLITBILLNO as 生产订单号,a.FmaterialNumber as 物料编码,a.FSPECIFICATION  as 规格型号,a.FProductLots as 流水号,
+  sql=paste0("    select a.FSRCSPLITBILLNO as 生产订单号,a.FmaterialNumber as 物料编码,a.FSPECIFICATION  as 规格型号,a.FProductLots as 流水号,
 c.[FProcessName] as 工序,a.FFINISHQTY as 汇报选单数量,b.FBoxQuantity as 每箱数量
 ,case when b.FBoxQuantity=0 then 0
 else FLOOR(a.FFINISHQTY /b.FBoxQuantity)
 end as 箱数,
 isnull(a.FFINISHQTY%nullif(b.FBoxQuantity,0),0) as 零头数
-,'' as 报废数 ,'' as 人工计时,'' as 人工补时,'' as 操作工,'' as 生产日期,'' as 输卡日期
+,d.FScrappedQty as 报废数 ,D.FManualtime as 人工计时,d.FManualstoppage as 人工补时,d.FOperator as 操作工,d.FProDate as 生产日期,d.FInputDate as 输卡日期
 from rds_erp_src_t_productdaily a
 left join rds_t_productRouting b  on a.FmaterialNumber=b.FMaterialNumber
 left join [rds_t_Routing] c on b.FRoutingNumber=c.FRoutingNumber
 left join  rds_t_productdaily d on a.FProductLots=d.FProductLots and c.FProcessName =d.FProcessName
 where  a.FProductLots not in (select FProductLots from [rds_t_productdaily_FProductLots_black])
-and d.FProductLots is  null and d.FProcessName is   null
+and( d.FProductLots is  null and d.FProcessName is   null
+or  YEAR(d.FInputDate) < 2000)
+
 
 
              ")
