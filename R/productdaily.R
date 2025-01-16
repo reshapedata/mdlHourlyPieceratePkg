@@ -174,6 +174,25 @@ productdaily_delete <- function(dms_token,FProductLots) {
 
 }
 
+#' 计时计件工资表按图号删除
+#'
+#' @param token
+#' @param FSPECIFICATION
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' productdaily_FSPECIFICATION_delete()
+productdaily_FSPECIFICATION_delete <- function(dms_token,FSPECIFICATION) {
+  sql=paste0(" delete  from rds_t_productdaily  where FSPECIFICATION='",FSPECIFICATION,"'
+             ")
+  res=tsda::sql_delete2(token = dms_token,sql_str = sql)
+  return(res)
+
+}
+
+
 #' 日报表上传
 #'
 #' @param file_name
